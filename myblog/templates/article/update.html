@@ -1,0 +1,42 @@
+
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>My Blog</title>
+  
+
+</head>
+<body>
+    
+
+    
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h3>Makale Güncelle</h3>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.media}}
+            {{form|crispy}}
+            <button type="submit" class="btn btn-danger">Submit</button>
+        </form>
+        <hr>
+    </div>
+</div>
+
+
+
+
+
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="{% static 'js/main.js' %}"></script>
+
+</body>
+</html>

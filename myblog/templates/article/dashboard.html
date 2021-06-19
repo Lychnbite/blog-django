@@ -1,0 +1,181 @@
+
+{% load static %}
+<!--ASIL SAYFA-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+	<meta charset="utf-8">
+	<title>Dashboard</title>
+	<style type="text/css">
+		
+
+		body{
+			font-family: sans-serif;
+			background-color: #eee;
+		}
+
+		.main-row {
+			margin: 8%;
+			background-color: white;
+			box-shadow: 0 0 10px rgba(0, 0, 0, .05);
+			border-radius:0.5rem ;
+		}
+
+
+		.blog-img > img{
+			width: 100%;
+			height: 100%;
+			transform: translateY(-30px);
+			object-fit: cover;
+			border-radius: 0.5rem;
+			box-shadow: 0 0 8px 3px rgba(0, 0, 0, .3);
+
+		}
+
+		.blog-date span{
+			color: #962c51;
+
+		}
+
+		.ul-cls {
+			justify-content: center;
+		}
+
+		.ul-cls li{
+			cursor: pointer;
+		}
+
+		.blog-title {
+			font-style: normal;
+			font-weight: 400;
+
+		}
+
+
+		.blog-desc {
+			font-style: normal;
+			line-height: 2;
+		}
+	</style>
+</head>
+
+
+
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <!--<a class="navbar-brand" href="{% url 'article:index' %}">Home</a>-->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'article:index' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'article:addarticle' %}">Post++</a>
+        </li>
+        <li class="nav-item dropdown">
+          <!--<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>-->
+        </li>
+        <li class="nav-item">
+          <!--<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
+        </li>
+      </ul>
+      <form action="" class="d-flex">
+		{% csrf_token %}
+		<input type="text" name="keyword" class="form-control me-2" placeholder="Search">
+		<button type="submit" class="btn btn-success">Search</button>
+	</form>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+	
+{% if articles %}
+{% for article in articles %}
+
+<div class="container">
+	
+	<div class="row main-row p-2">
+		<div class="col-lg-4 col-md-12 col-sm-12">
+		<form method="POST" enctype="multipart/form-data">
+			{{form.media}}
+			<div class="blog-img">
+			{% if article.article_image %}
+			<a href="#"><img class="img-fluid mx-auto" src="{{article.article_image.url}}" alt="nature"></a>
+			{%endif%}
+			</div>
+		</form>
+			<div class="row">
+				<div class="col-sm-12 mb-2">
+					<ul class="list-group list-group-horizontal ul-cls">
+						
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-8 col-md-12 col-sm-12">
+			<div class="blog-title mb-3">
+				<h3>{{article.title}}</h3>
+			</div>
+			<div class="blog-date mb-2">
+				<span>{{ article.author.username }}</span>
+				<span>{{article.created_date}}</span>
+			</div>
+			<div class="blog-desc mb-2">
+				<p>{{article.content|safe|truncatewords:40}}</p>
+				<a href="{% url 'article:detail' article.id %}" class="btn btn-outline-secondary">Read...</a>
+				<a href="{% url 'article:update' article.id %}" class = "btn btn-warning">Güncelle</a>
+				<a href="{% url 'article:delete' article.id %}" class = "btn btn-outline-danger">Sil</a>
+			</div>
+		
+		</div>
+	</div>
+
+</div>
+{% endfor %}
+
+{%else%}
+
+<div class="text-center" style="background:#D3CEC9;">
+  <h4><b>Henüz eklediğiniz herhangi bir makale bulunmamaktadır.</h4>
+  <p class="lead">Aşağıdaki butondan makale oluşturabilirsiniz.</p>
+  <hr class="my-4">
+  
+  <p class="lead">
+    <a class="btn btn-primary btn-lg" href="{% url 'article:addarticle' %}" role="button">Ekle</a>
+  </p>
+</div>
+
+{%endif%}
+
+
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+</body>
+</html>
