@@ -13,7 +13,7 @@
 - Search
 - Crispy Forms
 - CK Editor
-
+- Image Upload
 ## Home Page
 ![homepage](https://user-images.githubusercontent.com/69728819/122651359-f0067800-d140-11eb-9b32-f8d16918b57b.png)
 
